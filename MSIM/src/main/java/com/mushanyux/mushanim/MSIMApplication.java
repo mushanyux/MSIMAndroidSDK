@@ -2,6 +2,10 @@ package com.mushanyux.mushanim;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.mushanyux.mushanim.db.MSDBHelper;
@@ -10,6 +14,7 @@ import com.mushanyux.mushanim.utils.MSLoggerUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
+import java.util.UUID;
 
 public class MSIMApplication {
     private final String sharedName = "ms_account_config";
@@ -69,18 +74,17 @@ public class MSIMApplication {
         if (TextUtils.isEmpty(tempUid)) {
             SharedPreferences setting = mContext.get().getSharedPreferences(
                     sharedName, Context.MODE_PRIVATE);
-            tempUid = setting.getString("wk_UID", "");
+            tempUid = setting.getString("ms_UID", "");
         }
         return tempUid;
     }
 
     public void setUid(String uid) {
         if (mContext == null) return;
-        // tempUid = uid;
         SharedPreferences setting = mContext.get().getSharedPreferences(
                 sharedName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = setting.edit();
-        editor.putString("wk_UID", uid);
+        editor.putString("ms_UID", uid);
         editor.apply();
     }
 
@@ -88,7 +92,7 @@ public class MSIMApplication {
         if (mContext == null) return "";
         SharedPreferences setting = mContext.get().getSharedPreferences(
                 sharedName, Context.MODE_PRIVATE);
-        return setting.getString("wk_Token", "");
+        return setting.getString("ms_Token", "");
     }
 
     public void setToken(String token) {
@@ -96,7 +100,7 @@ public class MSIMApplication {
         SharedPreferences setting = mContext.get().getSharedPreferences(
                 sharedName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = setting.edit();
-        editor.putString("wk_Token", token);
+        editor.putString("ms_Token", token);
         editor.apply();
     }
     public synchronized MSDBHelper getDbHelper() {
@@ -111,6 +115,73 @@ public class MSIMApplication {
         return mDbHelper;
     }
 
+    public void closeDbHelper() {
+        if (mDbHelper != null) {
+            mDbHelper.close();
+            mDbHelper = null;
+        }
+    }
+
+    public long getDBUpgradeIndex() {
+        if (mContext == null) return 0;
+        SharedPreferences setting = mContext.get().getSharedPreferences(
+                sharedName, Context.MODE_PRIVATE);
+        return setting.getLong(getUid() + "_db_upgrade_index", 0);
+    }
+
+    public void setDBUpgradeIndex(long index) {
+        if (mContext == null) return;
+        SharedPreferences setting = mContext.get().getSharedPreferences(
+                sharedName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putLong(getUid() + "_db_upgrade_index", index);
+        editor.apply();
+    }
+
+    private void setDeviceId(String deviceId) {
+        if (mContext == null) return;
+        SharedPreferences setting = mContext.get().getSharedPreferences(
+                sharedName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+        if (TextUtils.isEmpty(deviceId))
+            deviceId = UUID.randomUUID().toString().replaceAll("-", "");
+        editor.putString(getUid() + "_ms_device_id", deviceId);
+        editor.apply();
+    }
+
+    public String getDeviceId() {
+        if (mContext == null) return "";
+        SharedPreferences setting = mContext.get().getSharedPreferences(
+                sharedName, Context.MODE_PRIVATE);
+        String deviceId = setting.getString(getUid() + "_ms_device_id", "");
+        if (TextUtils.isEmpty(deviceId)) {
+            deviceId = UUID.randomUUID().toString().replaceAll("-", "");
+            setDeviceId(deviceId);
+        }
+        return deviceId + "ad";
+    }
+
+    public boolean isNetworkConnected() {
+        if (mContext == null) {
+            MSLoggerUtils.getInstance().e("check network status The passed in context is null");
+            return false;
+        }
+        ConnectivityManager manager = (ConnectivityManager) mContext.get().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                NetworkCapabilities networkCapabilities = manager.getNetworkCapabilities(manager.getActiveNetwork());
+                if (networkCapabilities != null) {
+                    return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                            || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                            || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET);
+                }
+            } else {
+                NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+                return networkInfo != null && networkInfo.isConnected();
+            }
+        }
+        return false;
+    }
     public void setFileCacheDir(String fileDir) {
         this.fileDir = fileDir;
     }
