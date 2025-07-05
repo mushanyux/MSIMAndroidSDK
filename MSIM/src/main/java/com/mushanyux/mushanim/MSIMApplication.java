@@ -65,6 +65,29 @@ public class MSIMApplication {
     public void setSyncMsgMode(MSSyncMsgMode syncMsgMode) {
         this.syncMsgMode = syncMsgMode;
     }
+
+    public String getRSAPublicKey() {
+        if (mContext == null) {
+            MSLoggerUtils.getInstance().e("The passed in context is null");
+            return "";
+        }
+        if (TextUtils.isEmpty(tempRSAPublicKey)) {
+            SharedPreferences setting = mContext.get().getSharedPreferences(
+                    sharedName, Context.MODE_PRIVATE);
+            tempRSAPublicKey = setting.getString("ms_tempRSAPublicKey", "");
+        }
+        return tempRSAPublicKey;
+    }
+
+    public void setRSAPublicKey(String key) {
+        if (mContext == null) return;
+        tempRSAPublicKey = key;
+        SharedPreferences setting = mContext.get().getSharedPreferences(
+                sharedName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putString("ms_tempRSAPublicKey", key);
+        editor.apply();
+    }
     public String getUid() {
         if (mContext == null) {
             MSLoggerUtils.getInstance().e("The passed in context is null");
