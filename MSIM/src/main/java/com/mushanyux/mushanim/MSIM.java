@@ -11,6 +11,7 @@ import com.mushanyux.mushanim.manager.ConversationManager;
 import com.mushanyux.mushanim.manager.MsgManager;
 import com.mushanyux.mushanim.manager.ReminderManager;
 import com.mushanyux.mushanim.manager.RobotManager;
+import com.mushanyux.mushanim.message.MessageHandler;
 import com.mushanyux.mushanim.utils.CryptoUtils;
 
 public class MSIM {
@@ -85,7 +86,8 @@ public class MSIM {
         getMsgManager().initNormalMsg();
         // 初始化数据库
         MSIMApplication.getInstance().getDbHelper();
-        // todo 将上次发送消息中的队列标志为失败
+        // 将上次发送消息中的队列标志为失败
+        MessageHandler.getInstance().updateLastSendingMsgFail();
     }
 
     // 获取消息管理
