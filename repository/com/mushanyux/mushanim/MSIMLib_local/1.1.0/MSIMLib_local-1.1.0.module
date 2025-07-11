@@ -3,7 +3,7 @@
   "component": {
     "group": "com.mushanyux.mushanim",
     "module": "MSIMLib_local",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -23,8 +23,8 @@
       },
       "files": [
         {
-          "name": "MSIMLib_local-1.0.0.aar",
-          "url": "MSIMLib_local-1.0.0.aar",
+          "name": "MSIMLib_local-1.1.0.aar",
+          "url": "MSIMLib_local-1.1.0.aar",
           "size": 619939,
           "sha512": "13b47e667c6f7be5e8fb9d3d77466ac4379452ab1ebcaf5b89eddefab4466c6c3cae1dbbbc4c2aaf7938d52998ae97470ad7527fc8405702ade234ddabbb8b81",
           "sha256": "a628c4a7d2aa49fa6f4d9d250b6cedebab7de9de0d26d3642d736c48fc9c2f95",
@@ -104,8 +104,8 @@
       ],
       "files": [
         {
-          "name": "MSIMLib_local-1.0.0.aar",
-          "url": "MSIMLib_local-1.0.0.aar",
+          "name": "MSIMLib_local-1.1.0.aar",
+          "url": "MSIMLib_local-1.1.0.aar",
           "size": 619939,
           "sha512": "13b47e667c6f7be5e8fb9d3d77466ac4379452ab1ebcaf5b89eddefab4466c6c3cae1dbbbc4c2aaf7938d52998ae97470ad7527fc8405702ade234ddabbb8b81",
           "sha256": "a628c4a7d2aa49fa6f4d9d250b6cedebab7de9de0d26d3642d736c48fc9c2f95",
@@ -126,8 +126,8 @@
       },
       "files": [
         {
-          "name": "MSIMLib_local-1.0.0-sources.jar",
-          "url": "MSIMLib_local-1.0.0-sources.jar",
+          "name": "MSIMLib_local-1.1.0-sources.jar",
+          "url": "MSIMLib_local-1.1.0-sources.jar",
           "size": 316669,
           "sha512": "a45b703f643fca49627490eb415652ba97c8e8dc7d55dd4b8d3bf23193a1f7dc15f30d634af708a1a77ce03ce85691e05f8bf3826324e2ef2a68ea83fcaac650",
           "sha256": "0e32a791b1819a4c002a6d3ce74063af73a42dfdd93db1044fed3cc3345eafa0",
