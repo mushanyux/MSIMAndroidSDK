@@ -11,7 +11,7 @@ android {
         targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguar dFiles "consumer-rules.pro"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -41,6 +41,8 @@ dependencies {
     implementation platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.testng:testng:6.9.6'
 
     // 使用 embedded 配置来包含需要打包进 AAR 的依赖
     embedded files('libs/xSocket-2.8.15.jar')
@@ -71,10 +73,9 @@ afterEvaluate {
                         }
                     }
                 }
-
                 groupId = 'com.mushanyux.mushanim'
                 artifactId = 'MSIMLib_local'
-                version = '1.0.7'
+                version = '1.0.0'
             }
         }
         repositories {

@@ -1,4 +1,4 @@
-package com.mushanyux.msim
+package com.mushanyux.mushanim
 
 import org.junit.Test
 

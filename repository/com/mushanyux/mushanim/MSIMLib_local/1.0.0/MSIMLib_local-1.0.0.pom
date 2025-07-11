@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.mushanyux.mushanim</groupId>
   <artifactId>MSIMLib_local</artifactId>
-  <version>1.0.7</version>
+  <version>1.0.0</version>
   <packaging>aar</packaging>
   <name>MSIMLib</name>
   <description>MuShan IM Android Library</description>
